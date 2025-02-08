@@ -23,8 +23,12 @@ describe Game do
   end
 
   describe '#create_board' do
+    subject(:game) { described_class.new }
+    let(:board) { class_double(Board) }
+
     it 'creates object for the board' do
-      
+      expect(Board).to receive(:new).with(Array.new(6) { Array.new(7) })
+      game.create_board
     end
   end
 end
