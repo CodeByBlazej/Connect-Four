@@ -21,4 +21,10 @@ describe Game do
       end
     end
   end
+
+  describe '#create_board' do
+    it 'creates object for the board' do
+      
+    end
+  end
 end
