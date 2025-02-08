@@ -16,6 +16,7 @@ class Game
     introduction
     select_players_names_and_colors
     create_board
+    @board.display_board
   end
 
   def select_players_names_and_colors
@@ -33,7 +34,7 @@ class Game
   end
 
   def create_board
-    
+    @board = Board.new(Array.new(6) { Array.new(7) })
   end
 
   def introduction
