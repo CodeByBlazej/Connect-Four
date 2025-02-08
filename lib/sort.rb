@@ -15,6 +15,7 @@ class Game
   def play_game
     introduction
     select_players_names_and_colors
+    create_board
   end
 
   def select_players_names_and_colors
@@ -29,6 +30,10 @@ class Game
 
     @player1 = Players.new(@player1_name, @player1_color)
     @player2 = Players.new(@player2_name, @player2_color)
+  end
+
+  def create_board
+    
   end
 
   def introduction
