@@ -12,7 +12,7 @@ describe Board do
   end
 
   describe '#check_row_score' do
-    context 'when 4 fields in a row are the same' do
+    context 'when 4 fields in a row are the same hence there is a winner' do
       subject(:board) { described_class.new(Array.new(6) { Array.new(7) }) }
       let(:player) { instance_double(Players, name: 'Tom', symbol: "\u26AA") }
 
@@ -24,7 +24,7 @@ describe Board do
         allow(board).to receive(:puts)
       end
 
-      it 'returns true' do
+      it 'returns true and puts a message' do
         expect(board).to receive(:puts).with("#{player.name} WON THE GAME!").once
         board.check_row_score(player)
       end
@@ -33,6 +33,30 @@ describe Board do
         result = board.check_row_score(player)
         expect(result).to be_truthy
         expect(board.winner).to eq(true)
+      end
+    end
+
+    context 'when fields in a rows are different and there is NO winner' do
+      subject(:board) { described_class.new(Array.new(6) { Array.new(7) }) }
+      let(:player) { instance_double(Players, name: 'Blazej', symbol: "\u26AB") }
+
+      before do
+        board.board[0][0] = "\u26AA"
+        board.board[0][1] = "\u26AA"
+        board.board[0][4] = "\u26AA"
+        board.board[0][7] = "\u26AA"
+        allow(board).to receive(:puts)
+      end
+
+      it 'does NOT return true and does NOT puts a message' do
+        expect(board).not_to receive(:puts).with("#{player.name} WON THE GAME!")
+        board.check_row_score(player)
+      end
+
+      it 'does NOT set winner to be true' do
+        result = board.check_row_score(player)
+        expect(result).not_to be_truthy
+        expect(board.winner).to eq(false)
       end
     end
   end
