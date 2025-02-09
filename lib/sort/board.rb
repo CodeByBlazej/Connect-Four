@@ -29,4 +29,16 @@ class Board
     end
     false
   end
+
+  def check_column_score(player)
+    (0...board.first.size).each do |index|
+       board.each_cons(4) do |four|
+        if four.all? { |el| el[index] == player.symbol }
+          puts "#{player.name} WON THE GAME!"
+          @winner = true
+          return true
+        end
+      end
+    end
+  end
 end
