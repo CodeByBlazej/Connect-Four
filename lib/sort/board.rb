@@ -6,6 +6,7 @@ class Board
 
   def initialize board
     @board = board
+    @winner = false
   end
 
   def display_board
@@ -17,16 +18,15 @@ class Board
   end
 
   def check_row_score(player)
-    board.each do |scores|
-      consecutive_elements = []
-
-      scores.each_cons(4) { |score| consecutive_elements << score }
-      consecutive_elements.any? do |elements|
-        if elements.all? { |el| el == player.symbol }
+    board.each do |row|
+      row.each_cons(4) do |four|
+        if four.all? { |el| el == player.symbol }
           puts "#{player.name} WON THE GAME!"
           @winner = true
+          return true
         end
       end
     end
+    false
   end
 end
