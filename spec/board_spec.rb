@@ -12,15 +12,15 @@ describe Board do
   end
 
   describe '#check_row_score' do
-    context 'when 4 fields in a row are the same hence there is a winner' do
+    context 'when 4 fields in a row are the same' do
       subject(:board) { described_class.new(Array.new(6) { Array.new(7) }) }
       let(:player) { instance_double(Players, name: 'Tom', symbol: "\u26AA") }
 
       before do
-        board.board[0][0] = "\u26AA"
-        board.board[0][1] = "\u26AA"
-        board.board[0][2] = "\u26AA"
-        board.board[0][3] = "\u26AA"
+        board.board[0][0] = player.symbol
+        board.board[0][1] = player.symbol
+        board.board[0][2] = player.symbol
+        board.board[0][3] = player.symbol
         allow(board).to receive(:puts)
       end
 
@@ -41,10 +41,10 @@ describe Board do
       let(:player) { instance_double(Players, name: 'Blazej', symbol: "\u26AB") }
 
       before do
-        board.board[0][0] = "\u26AA"
-        board.board[0][1] = "\u26AA"
-        board.board[0][4] = "\u26AA"
-        board.board[0][7] = "\u26AA"
+        board.board[0][0] = player.symbol
+        board.board[0][1] = player.symbol
+        board.board[0][4] = player.symbol
+        board.board[0][7] = player.symbol
         allow(board).to receive(:puts)
       end
 
@@ -57,6 +57,26 @@ describe Board do
         result = board.check_row_score(player)
         expect(result).not_to be_truthy
         expect(board.winner).to eq(false)
+      end
+    end
+  end
+
+  describe '#check_column_score' do
+    context 'when 4 scores in any row are the same' do
+      subject(:board) { described_class.new(Array.new(6) { Array.new(7) }) }
+      let(:player) { instance_double(Players, name: 'Tom', symbol: "\u26AA" ) }
+
+      before do
+        board.board[0][0] = player.symbol
+        board.board[1][0] = player.symbol
+        board.board[2][0] = player.symbol
+        board.board[3][0] = player.symbol
+        allow(board).to receive(:puts)
+      end
+
+      it 'returns true and puts a message' do
+        expect(board).to receive(:puts).with("#{player.name} WON THE GAME!")
+        board.check_column_score(player)
       end
     end
   end
