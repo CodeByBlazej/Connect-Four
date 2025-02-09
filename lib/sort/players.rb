@@ -2,10 +2,10 @@ require_relative '../sort'
 
 
 class Players
-  attr_reader :name, :color
+  attr_reader :name, :symbol
   
-  def initialize (name, color)
+  def initialize (name, symbol)
     @name = name
-    @color = color
+    @symbol = symbol
   end
 end
