@@ -29,7 +29,7 @@ describe Board do
         board.check_row_score(player)
       end
 
-      it 'set winner to be true' do
+      it 'sets winner to be true' do
         result = board.check_row_score(player)
         expect(result).to be_truthy
         expect(board.winner).to eq(true)
@@ -64,7 +64,7 @@ describe Board do
   describe '#check_column_score' do
     context 'when 4 scores in any row are the same' do
       subject(:board) { described_class.new(Array.new(6) { Array.new(7) }) }
-      let(:player) { instance_double(Players, name: 'Tom', symbol: "\u26AA" ) }
+      let(:player) { instance_double(Players, name: 'Tom', symbol: "\u26AA") }
 
       before do
         board.board[0][0] = player.symbol
@@ -77,6 +77,56 @@ describe Board do
       it 'returns true and puts a message' do
         expect(board).to receive(:puts).with("#{player.name} WON THE GAME!")
         board.check_column_score(player)
+      end
+
+      it 'sets winner to be true' do
+        result = board.check_column_score(player)
+        expect(result).to be_truthy
+        expect(board.winner).to eq(true)
+      end
+    end
+
+    context 'when fields in a column are different and there is NO winner' do
+      subject(:board) { described_class.new(Array.new(6) { Array.new(7) }) }
+      let(:player) { instance_double(Players, name: 'Eric', symbol: "\u26AB") }
+
+      before do
+        board.board[0][0] = player.symbol
+        board.board[1][1] = player.symbol
+        board.board[2][0] = player.symbol
+        board.board[3][0] = player.symbol
+        allow(board).to receive(:puts)
+      end
+
+      it 'does NOT returns true and does NOT puts a message' do
+        expect(board).not_to receive(:puts).with("#{player.name} WON THE GAME!")
+        board.check_column_score(player)
+      end
+
+      it 'does NOT set winner to be true' do
+        result = board.check_column_score(player)
+        expect(result).not_to be_truthy
+        expect(board.winner).to eq(false)
+      end
+    end
+  end
+
+  describe '#check_diagonal_score' do
+    context 'when any 4 diagonal scores are the same' do
+      subject(:board) { described_class.new(Array.new(6) { Array.new(7) }) }
+      let(:player) { instance_double(Players, name: 'Ian', symbol: "\u26AA") }
+
+      before do
+        board.board[0][0] = player.symbol
+        board.board[1][1] = player.symbol
+        board.board[2][2] = player.symbol
+        board.board[3][3] = player.symbol
+        allow(board).to receive(:puts)
+      end
+
+      it 'returns true and puts a message' do
+        expect(board).to receive(:puts).with("#{player.name} WON THE GAME!")
+        board.check_diagonal_score(player)
       end
     end
   end
