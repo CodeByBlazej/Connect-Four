@@ -44,6 +44,12 @@ class Board
   end
 
   def check_diagonal_score(player)
-    puts (0...board.size).collect { |i| board[i][i] }
+    diagonals = (0...board.size).collect { |i| board[i][i] }
+    
+    diagonals.each_cons(4) do |four|
+      if four.all? { |el| el == player.symbol }
+        puts "#{player.name} WON THE GAME!"
+      end
+    end
   end
 end
