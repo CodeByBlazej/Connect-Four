@@ -40,5 +40,10 @@ class Board
         end
       end
     end
+    false
+  end
+
+  def check_diagonal_score(player)
+    puts (0...board.size).collect { |i| board[i][i] }
   end
 end
