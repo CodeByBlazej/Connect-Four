@@ -49,7 +49,10 @@ class Board
     diagonals.each_cons(4) do |four|
       if four.all? { |el| el == player.symbol }
         puts "#{player.name} WON THE GAME!"
+        @winner = true
+        return true
       end
     end
+    false
   end
 end
