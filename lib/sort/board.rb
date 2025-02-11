@@ -45,7 +45,7 @@ class Board
 
   def check_diagonal_score(player)
     diagonals = (0...board.size).collect { |i| board[i][i] }
-    
+ 
     diagonals.each_cons(4) do |four|
       if four.all? { |el| el == player.symbol }
         puts "#{player.name} WON THE GAME!"
@@ -54,5 +54,12 @@ class Board
       end
     end
     false
+  end
+
+  def check_anti_diagonal_score(player)
+    anti_diagonals = (0...board.size).collect { |i| board[i][board.size - 3 - i] }
+    binding.pry
+   
+    puts '2'
   end
 end
