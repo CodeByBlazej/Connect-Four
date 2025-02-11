@@ -44,22 +44,33 @@ class Board
   end
 
   def check_diagonal_score(player)
-    diagonals = (0...board.size).collect { |i| board[i][i] }
- 
-    diagonals.each_cons(4) do |four|
-      if four.all? { |el| el == player.symbol }
-        puts "#{player.name} WON THE GAME!"
-        @winner = true
-        return true
-      end
+    rows = board.size
+    cols = board.first.size
+    diagonals = []
+
+    (0...cols).each do |start_col|
+      diagonal = []
+      row = 0
+      col = start_col
+      
     end
-    false
+
+    # diagonals = (0...board.size).collect { |i| board[i][i] }
+ 
+    # diagonals.each_cons(4) do |four|
+    #   if four.all? { |el| el == player.symbol }
+    #     puts "#{player.name} WON THE GAME!"
+    #     @winner = true
+    #     return true
+    #   end
+    # end
+    # false
   end
 
-  def check_anti_diagonal_score(player)
-    anti_diagonals = (0...board.size).collect { |i| board[i][board.size - 3 - i] }
-    binding.pry
+  # def check_anti_diagonal_score(player)
+  #   anti_diagonals = (0...board.size).collect { |i| board[i][board.size - 3 - i] }
+  #   binding.pry
    
-    puts '2'
-  end
+  #   puts '2'
+  # end
 end
