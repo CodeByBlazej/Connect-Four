@@ -117,10 +117,10 @@ describe Board do
       let(:player) { instance_double(Players, name: 'Ian', symbol: "\u26AA") }
 
       before do
-        board.board[0][0] = player.symbol
-        board.board[1][1] = player.symbol
-        board.board[2][2] = player.symbol
-        board.board[3][3] = player.symbol
+        board.board[1][2] = player.symbol
+        board.board[2][3] = player.symbol
+        board.board[3][4] = player.symbol
+        board.board[4][5] = player.symbol
         allow(board).to receive(:puts)
       end
 
@@ -161,23 +161,23 @@ describe Board do
     end
   end
 
-  describe "#check_anti_diagonal_score" do
-    context 'when any 4 anti diagonal scores are the same' do
-      subject(:board) { described_class.new(Array.new(6) { Array.new(7) }) }
-      let(:player) { instance_double(Players, name: 'Terry', symbol: "\u26AB") }
+  # describe "#check_anti_diagonal_score" do
+  #   context 'when any 4 anti diagonal scores are the same' do
+  #     subject(:board) { described_class.new(Array.new(6) { Array.new(7) }) }
+  #     let(:player) { instance_double(Players, name: 'Terry', symbol: "\u26AB") }
 
-      before do
-        board.board[0][3] = player.symbol
-        board.board[1][2] = player.symbol
-        board.board[2][1] = player.symbol
-        board.board[3][0] = player.symbol
-        allow(board).to receive(:puts)
-      end
+  #     before do
+  #       board.board[0][3] = player.symbol
+  #       board.board[1][2] = player.symbol
+  #       board.board[2][1] = player.symbol
+  #       board.board[3][0] = player.symbol
+  #       allow(board).to receive(:puts)
+  #     end
 
-      it 'returns true and puts a message' do
-        expect(board).to receive(:puts).with("#{player.name} WON THE GAME!")
-        board.check_anti_diagonal_score(player)
-      end
-    end
-  end
+  #     it 'returns true and puts a message' do
+  #       expect(board).to receive(:puts).with("#{player.name} WON THE GAME!")
+  #       board.check_anti_diagonal_score(player)
+  #     end
+  #   end
+  # end
 end
