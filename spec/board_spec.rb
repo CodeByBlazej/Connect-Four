@@ -128,6 +128,36 @@ describe Board do
         expect(board).to receive(:puts).with("#{player.name} WON THE GAME!")
         board.check_diagonal_score(player)
       end
+
+      it 'sets winner to be true' do
+        result = board.check_diagonal_score(player)
+        expect(result).to be_truthy
+        expect(board.winner).to eq(true)
+      end
+    end
+
+    context 'when there is NOT 4 scores in diagonal' do
+      subject(:board) { described_class.new(Array.new(6) { Array.new(7)} ) }
+      let(:player) { instance_double(Players, name: 'Tim', symbol: '\u26AB') }
+
+      before do
+        board.board[0][0] = player.symbol
+        board.board[1][1] = player.symbol
+        board.board[2][3] = player.symbol
+        board.board[3][3] = player.symbol
+        allow(board).to receive(:puts)
+      end
+
+      it 'does NOT return true and does NOT puts a message' do
+        expect(board).not_to receive(:puts).with("#{player.name} WON THE GAME!")
+        board.check_diagonal_score(player)
+      end
+
+      it 'does NOT set winner to be true' do
+        result = board.check_diagonal_score(player)
+        expect(result).not_to be_truthy
+        expect(board.winner).to eq(false)
+      end
     end
   end
 end
