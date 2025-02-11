@@ -138,7 +138,7 @@ describe Board do
 
     context 'when there is NOT 4 scores in diagonal' do
       subject(:board) { described_class.new(Array.new(6) { Array.new(7)} ) }
-      let(:player) { instance_double(Players, name: 'Tim', symbol: '\u26AB') }
+      let(:player) { instance_double(Players, name: 'Tim', symbol: "\u26AB") }
 
       before do
         board.board[0][0] = player.symbol
@@ -157,6 +157,26 @@ describe Board do
         result = board.check_diagonal_score(player)
         expect(result).not_to be_truthy
         expect(board.winner).to eq(false)
+      end
+    end
+  end
+
+  describe "#check_anti_diagonal_score" do
+    context 'when any 4 anti diagonal scores are the same' do
+      subject(:board) { described_class.new(Array.new(6) { Array.new(7) }) }
+      let(:player) { instance_double(Players, name: 'Terry', symbol: "\u26AB") }
+
+      before do
+        board.board[0][3] = player.symbol
+        board.board[1][2] = player.symbol
+        board.board[2][1] = player.symbol
+        board.board[3][0] = player.symbol
+        allow(board).to receive(:puts)
+      end
+
+      it 'returns true and puts a message' do
+        expect(board).to receive(:puts).with("#{player.name} WON THE GAME!")
+        board.check_anti_diagonal_score(player)
       end
     end
   end
