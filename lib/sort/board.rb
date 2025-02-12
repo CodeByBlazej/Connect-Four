@@ -53,7 +53,48 @@ class Board
       row = 0
       col = start_col
       
+      while row < rows && col < cols
+        diagonal << board[row][col]
+        row += 1
+        col += 1
+      end
+
+      diagonals << diagonal if diagonal.size >= 4
     end
+    
+    (1...rows).each do |start_row|
+      diagonal = []
+      row = start_row
+
+      col = 0
+      while row < rows && col < cols
+        diagonal << board[row][col]
+        row += 1
+        col += 1
+      end
+
+      diagonals << diagonal if diagonal.size >= 4
+    end
+
+    diagonals.each do |arr|
+      arr.each_cons(4) do |four|
+        if four.all? { |el| el == player.symbol }
+          puts "#{player.name} WON THE GAME!"
+          @winner = true
+          return true
+        end
+      end
+    end
+
+    # diagonals.each_cons(4) do |four|
+    #   if four.all? { |el| el == player.symbol }
+    #     puts "#{player.name} WON THE GAME!"
+    #     @winner = true
+    #     return true
+    #   end
+    # end
+    false
+
 
     # diagonals = (0...board.size).collect { |i| board[i][i] }
  
