@@ -117,10 +117,10 @@ describe Board do
       let(:player) { instance_double(Players, name: 'Ian', symbol: "\u26AA") }
 
       before do
-        board.board[1][2] = player.symbol
-        board.board[2][3] = player.symbol
-        board.board[3][4] = player.symbol
-        board.board[4][5] = player.symbol
+        board.board[2][0] = player.symbol
+        board.board[3][1] = player.symbol
+        board.board[4][2] = player.symbol
+        board.board[5][3] = player.symbol
         allow(board).to receive(:puts)
       end
 
