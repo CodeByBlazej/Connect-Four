@@ -161,23 +161,60 @@ describe Board do
     end
   end
 
-  # describe "#check_anti_diagonal_score" do
-  #   context 'when any 4 anti diagonal scores are the same' do
-  #     subject(:board) { described_class.new(Array.new(6) { Array.new(7) }) }
-  #     let(:player) { instance_double(Players, name: 'Terry', symbol: "\u26AB") }
+  describe "#check_anti_diagonal_score" do
+    context 'when any 4 anti diagonal scores are the same' do
+      subject(:board) { described_class.new(Array.new(6) { Array.new(7) }) }
+      let(:player) { instance_double(Players, name: 'Terry', symbol: "\u26AB") }
 
-  #     before do
-  #       board.board[0][3] = player.symbol
-  #       board.board[1][2] = player.symbol
-  #       board.board[2][1] = player.symbol
-  #       board.board[3][0] = player.symbol
-  #       allow(board).to receive(:puts)
-  #     end
+      before do
+        board.board[0][3] = player.symbol
+        board.board[1][2] = player.symbol
+        board.board[2][1] = player.symbol
+        board.board[3][0] = player.symbol
 
-  #     it 'returns true and puts a message' do
-  #       expect(board).to receive(:puts).with("#{player.name} WON THE GAME!")
-  #       board.check_anti_diagonal_score(player)
-  #     end
-  #   end
-  # end
+        # board.board[2][6] = player.symbol
+        # board.board[3][5] = player.symbol
+        # board.board[4][4] = player.symbol
+        # board.board[5][3] = player.symbol
+        # board.board[1][6] = 'X'
+
+        allow(board).to receive(:puts)
+      end
+
+      it 'returns true and puts a message' do
+        expect(board).to receive(:puts).with("#{player.name} WON THE GAME!")
+        board.check_anti_diagonal_score(player)
+      end
+
+      it 'sets winner to be true' do
+        result = board.check_anti_diagonal_score(player)
+        expect(result).to be_truthy
+        expect(board.winner).to eq(true)
+      end
+    end
+
+    context 'when there is NOT 4 scores in anti diagonal' do
+      subject(:board) { described_class.new(Array.new(6) { Array.new(7) }) }
+      let(:player) { instance_double(Players, name: 'Bill', symbol: "\u26AA") }
+
+      before do
+        board.board[0][4] = player.symbol
+        board.board[1][3] = player.symbol
+        board.board[2][2] = player.symbol
+        board.board[3][5] = player.symbol
+        allow(board).to receive(:puts)
+      end
+
+      it 'does NOT return true and does NOT puts a message' do
+        expect(board).not_to receive(:puts).with("#{player.name} WON THE GAME!")
+        board.check_anti_diagonal_score(player)
+      end
+
+      it 'does NOT set winner to be true' do
+        result = board.check_anti_diagonal_score(player)
+        expect(result).not_to be_truthy
+        expect(board.winner).to eq(false)
+      end
+    end
+  end
 end
