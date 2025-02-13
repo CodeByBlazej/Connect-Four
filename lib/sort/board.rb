@@ -65,8 +65,8 @@ class Board
     (1...rows).each do |start_row|
       diagonal = []
       row = start_row
-
       col = 0
+
       while row < rows && col < cols
         diagonal << board[row][col]
         row += 1
@@ -86,32 +86,52 @@ class Board
       end
     end
 
-    # diagonals.each_cons(4) do |four|
-    #   if four.all? { |el| el == player.symbol }
-    #     puts "#{player.name} WON THE GAME!"
-    #     @winner = true
-    #     return true
-    #   end
-    # end
     false
-
-
-    # diagonals = (0...board.size).collect { |i| board[i][i] }
- 
-    # diagonals.each_cons(4) do |four|
-    #   if four.all? { |el| el == player.symbol }
-    #     puts "#{player.name} WON THE GAME!"
-    #     @winner = true
-    #     return true
-    #   end
-    # end
-    # false
   end
 
-  # def check_anti_diagonal_score(player)
-  #   anti_diagonals = (0...board.size).collect { |i| board[i][board.size - 3 - i] }
-  #   binding.pry
-   
-  #   puts '2'
-  # end
+  def check_anti_diagonal_score(player)
+    rows = board.size
+    cols = board.first.size
+    diagonals = []
+
+    (0...cols).each do |start_col|
+      diagonal = []
+      row = 0
+      col = start_col
+
+      while row < rows && col < cols
+        diagonal << board[row][cols - 1 - col]
+        row += 1
+        col += 1
+      end
+      
+      diagonals << diagonal if diagonal.size >= 4
+    end
+
+    (1...rows).each do |start_row|
+      diagonal = []
+      row = start_row
+      col = 0
+
+      while row < rows && col < cols
+        diagonal << board[row][cols - 1 - col]
+        row += 1
+        col += 1
+      end
+
+      diagonals << diagonal if diagonal.size >= 4
+    end
+
+    diagonals.each do |arr|
+      arr.each_cons(4) do |four|
+        if four.all? { |el| el == player.symbol }
+          puts "#{player.name} WON THE GAME!"
+          @winner = true
+          return true
+        end
+      end
+    end
+    
+    false
+  end
 end
