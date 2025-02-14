@@ -29,4 +29,20 @@ describe Game do
       game.create_board
     end
   end
+
+  describe '#somebody_wins?' do
+    context 'when method is called and somebody wins' do
+      subject(:game) { described_class.new }
+      let(:board) { instance_double(Board, winner: false) }
+  
+      before do
+        game.instance_variable_set(:@board, board)
+      end
+
+      it 'returns true' do
+        result = game.somebody_wins?
+        expect(result).to eq(false)
+      end
+    end
+  end
 end
