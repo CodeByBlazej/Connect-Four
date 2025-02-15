@@ -39,7 +39,6 @@ class Game
   end
 
   def somebody_wins?
-    return false unless 
     board.check_row_score(player1) || 
     board.check_row_score(player2) ||
     board.check_column_score(player1) ||
@@ -48,6 +47,15 @@ class Game
     board.check_diagonal_score(player2) ||
     board.check_anti_diagonal_score(player1) ||
     board.check_anti_diagonal_score(player2)
+  end
+
+  def board_full?
+    board.board.each do |arr|
+      if arr.all? { |el| el == player1_symbol || player2_symbol }
+        return true
+      end
+    end
+    false
   end
 
   def introduction
