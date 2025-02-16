@@ -27,6 +27,7 @@ class Board
         end
       end
     end
+
     false
   end
 
@@ -40,6 +41,7 @@ class Board
         end
       end
     end
+    
     false
   end
 
