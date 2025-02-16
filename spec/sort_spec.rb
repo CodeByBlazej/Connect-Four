@@ -131,4 +131,95 @@ describe Game do
       end
     end
   end
+
+  describe '#select_which_player_plays_first' do
+    context 'when user select player 1' do
+      subject(:game) { described_class.new }
+      let(:player1) { instance_double(Players, name: 'Tom', symbol: "\u26AA") }
+      let(:player2) { instance_double(Players, name: 'Marek', symbol: "\u26AB") }
+
+      before do
+        message = "Which one of you wants to play first? Please type 'player 1' or 'player 2'"
+        answer = 'player 1'
+
+        allow(game).to receive(:puts).with(message)
+        allow(game).to receive(:gets).and_return(answer)
+        
+        game.instance_variable_set(:@player1, player1)
+        game.instance_variable_set(:@player2, player2)
+      end
+      
+      it 'sets first_player to be player1 and second_player to be player2' do
+        game.select_which_player_plays_first
+        expect(game.instance_variable_get(:@first_player)).to eq(player1)
+        expect(game.instance_variable_get(:@second_player)).to eq(player2)
+
+      end
+    end
+
+    context 'when user select player 2' do
+      subject(:game) { described_class.new }
+      let(:player1) { instance_double(Players, name: 'Adam', symbol: "\u26AA") }
+      let(:player2) { instance_double(Players, name: 'Kamil', symbol: "\u26AB") }
+
+      before do
+        message = "Which one of you wants to play first? Please type 'player 1' or 'player 2'"
+        answer = 'player 2'
+
+        allow(game).to receive(:puts).with(message)
+        allow(game).to receive(:gets).and_return(answer)
+
+
+        game.instance_variable_set(:@player1, player1)
+        game.instance_variable_set(:@player2, player2)
+      end
+
+      it 'sets first_player to be player2 and second_player to be player1' do
+        game.select_which_player_plays_first
+        expect(game.instance_variable_get(:@first_player)).to eq(player2)
+        expect(game.instance_variable_get(:@second_player)).to eq(player1)
+      end
+    end
+
+    context 'when user makes typo mistake once' do
+      subject(:game) { described_class.new }
+
+      before do
+        message = "Which one of you wants to play first? Please type 'player 1' or 'player 2'"
+        
+        allow(game).to receive(:puts).with(message)
+      end
+
+      it 'returns message and ask for new answer' do
+        message2 = "I'm sorry, it looks like you made a typo. Please write again 'player 1' or 'player 2'"
+        expect(game).to receive(:puts).with(message2).once
+
+        allow(game).to receive(:gets).and_return('blabla', 'player 1')
+
+        game.select_which_player_plays_first
+      end
+    end
+  end
+
+  # describe '#play_round' do
+  #   context 'when player 1 is randomly selected' do
+  #     subject(:game) { described_class.new }
+  #     let(:board) { instance_double(Board) }
+  #     let(:board_array) { Array.new(6) { Array.new(7) } }
+  #     let(:player1_symbol) { "\u26AA" }
+  #     let(:player2_symbol) { "\u26AB" }
+
+  #     before do
+  #       game.get_instance_variable_set(:@board, board)
+  #       game.get_instance_variable_set(:@player1_symbol)
+  #       game.get_instance_variable_set(:@player2_symbol)
+        
+  #       allow(board).to receive(:board).and_return(board_array)
+  #     end
+
+  #     it 'asks him first to chose the spot' do
+        
+  #     end
+  #   end
+  # end
 end
