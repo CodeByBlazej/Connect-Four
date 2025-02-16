@@ -104,9 +104,30 @@ describe Game do
         end
       end
 
-      it 'returns true' do
+      it 'returns TRUE' do
         result = game.board_full?
         expect(result).to eq(true)
+      end
+    end
+
+    context 'when board is NOT full' do
+      subject(:game) { described_class.new }
+      let(:board) { instance_double(Board) }
+      let(:board_array) { Array.new(6) { Array.new(7) } }
+      let(:player1_symbol) { "\u26AB " }
+
+      before do
+        game.instance_variable_set(:@board, board)
+        game.instance_variable_set(:@player1_symbol, player1_symbol)
+
+        allow(board).to receive(:board).and_return(board_array)
+
+        board.board[0][1] = player1_symbol
+      end
+
+      it 'returns FALSE' do
+        result = game.board_full?
+        expect(result).to eq(false)
       end
     end
   end
