@@ -1,9 +1,10 @@
 require_relative 'sort/board'
 require_relative 'sort/players'
+require 'pry-byebug'
 
 
 class Game
-  attr_reader :player1_name, :player1_symbol, :player2_name, :player2_symbol, :player1, :player2, :board
+  attr_reader :player1_name, :player1_symbol, :player2_name, :player2_symbol, :player1, :player2, :board, :first_player, :second_player
 
   def initialize
     # @player1_name = player1_name
@@ -18,6 +19,7 @@ class Game
     create_board
     # board.display board is only to check whats going on now
     @board.display_board
+    select_which_player_plays_first
     #idea for next methods: 
     #play_round until somebody_wins? || board_full?
   end
@@ -38,6 +40,30 @@ class Game
     @board = Board.new(Array.new(6) { Array.new(7) })
   end
 
+  def select_which_player_plays_first
+    puts "Which one of you wants to play first? Please type 'player 1' or 'player 2'"
+    answer = gets.chomp
+    
+    until answer == 'player 1' || answer == 'player 2' do
+      puts "I'm sorry, it looks like you made a typo. Please write again 'player 1' or 'player 2'"
+      answer = gets.chomp
+    end
+
+    if answer == 'player 1'
+      @first_player = player1
+      @second_player = player2
+    else
+      @first_player = player2
+      @second_player = player1
+    end
+  end
+
+  def play_round
+    player_playing = [player1, player2].sample
+
+    
+  end
+
   def somebody_wins?
     board.check_row_score(player1) || 
     board.check_row_score(player2) ||
@@ -55,6 +81,7 @@ class Game
         return true
       end
     end
+
     false
   end
 
