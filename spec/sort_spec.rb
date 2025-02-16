@@ -186,7 +186,7 @@ describe Game do
 
       before do
         message = "Which one of you wants to play first? Please type 'player 1' or 'player 2'"
-        
+
         allow(game).to receive(:puts).with(message)
       end
 
@@ -201,25 +201,17 @@ describe Game do
     end
   end
 
-  # describe '#play_round' do
-  #   context 'when player 1 is randomly selected' do
-  #     subject(:game) { described_class.new }
-  #     let(:board) { instance_double(Board) }
-  #     let(:board_array) { Array.new(6) { Array.new(7) } }
-  #     let(:player1_symbol) { "\u26AA" }
-  #     let(:player2_symbol) { "\u26AB" }
+  describe '#play_round' do
+    context 'when round starts' do
+      subject(game) { described_class.new }
 
-  #     before do
-  #       game.get_instance_variable_set(:@board, board)
-  #       game.get_instance_variable_set(:@player1_symbol)
-  #       game.get_instance_variable_set(:@player2_symbol)
+      it 'checks if it is first round' do
         
-  #       allow(board).to receive(:board).and_return(board_array)
-  #     end
+      end
 
-  #     it 'asks him first to chose the spot' do
-        
-  #     end
-  #   end
-  # end
+      it 'changes next_turn_player to player who will play next round' do
+
+      end
+    end
+  end
 end
