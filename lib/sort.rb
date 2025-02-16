@@ -59,7 +59,7 @@ class Game
   end
 
   def play_round
-    player_playing = [player1, player2].sample
+    
 
     
   end
