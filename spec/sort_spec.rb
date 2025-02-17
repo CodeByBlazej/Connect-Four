@@ -202,15 +202,93 @@ describe Game do
   end
 
   describe '#play_round' do
-    context 'when round starts' do
-      subject(game) { described_class.new }
+    context 'when it is first round' do
+      subject(:game) { described_class.new }
+      let(:player1) { instance_double(Players, name: 'Adam', symbol: "\u26AA") }
+      let(:player2) { instance_double(Players, name: 'Ewa', symbol: "\u26AB") }
+      let(:first_player) { player1 }
+      let(:second_player) { player2 }
 
-      it 'checks if it is first round' do
-        
+
+      before do
+        game.instance_variable_set(:@player1, player1)
+        game.instance_variable_set(:@player2, player2)
+        game.instance_variable_set(:@first_player, first_player)
+        game.instance_variable_set(:@second_player, second_player)
       end
 
-      it 'changes next_turn_player to player who will play next round' do
+      it 'checks if next_turn_player variable is nil' do
+        expect(game.instance_variable_get(:@next_turn_player)).to eq(nil)
+      end
 
+      it 'calls #make_move with @first_player' do
+        expect(game).to receive(:make_move).with(first_player)
+        game.play_round
+      end
+
+      it 'assigns @second_player to next_turn_player' do
+        game.play_round
+        expect(game.instance_variable_get(:@next_turn_player)).to eq(second_player)
+      end
+    end
+
+    context 'when it is second round and @first_player is playing' do
+      subject(:game) { described_class.new }
+      let(:player1) { instance_double(Players, name: 'Ross', symbol: "\u26AA") }
+      let(:player2) { instance_double(Players, name: 'Rob', symbol: "\u26AB") }
+      let(:first_player) { player1 }
+      let(:second_player) { player2 }
+
+      before do
+        game.instance_variable_set(:@player1, player1)
+        game.instance_variable_set(:@player2, player2)
+        game.instance_variable_set(:@first_player, first_player)
+        game.instance_variable_set(:@second_player, second_player)
+      end
+
+      it 'checks if next_turn_player variable is nil' do
+        expect(game.instance_variable_get(:@next_turn_player)).to eq(nil)
+      end
+
+      it 'calls #make_move with @first_player' do
+        expect(game).to receive(:make_move).with(first_player)
+        game.play_round
+      end
+
+      it 'assigns @second_player to next_turn_player' do
+        game.play_round
+        expect(game.instance_variable_get(:@next_turn_player)).to eq(second_player)
+      end
+    end
+
+    context 'when it is third round and @second_player is playing' do
+      subject(:game) { described_class.new }
+      let(:player1) { instance_double(Players, name: 'Greg', symbol: "\u26AA") }
+      let(:player2) { instance_double(Players, name: 'Tim', symbol: "\u26AB") }
+      let(:first_player) { player1 }
+      let(:second_player) { player2 }
+      let(:next_turn_player) { second_player }
+
+      before do
+        game.instance_variable_set(:@player1, player1)
+        game.instance_variable_set(:@player2, player2)
+        game.instance_variable_set(:@first_player, first_player)
+        game.instance_variable_set(:@second_player, second_player)
+        game.instance_variable_set(:@next_turn_player, next_turn_player)
+      end
+
+      it 'checks if next_turn_player variable is second_player' do
+        expect(game.instance_variable_get(:@next_turn_player)).to eq(second_player)
+      end
+
+      it 'calls #make_move with @second_player' do
+        expect(game).to receive(:make_move).with(second_player)
+        game.play_round
+      end
+
+      it 'assigns @first_player to next_turn_player' do
+        game.play_round
+        expect(game.instance_variable_get(:@next_turn_player)).to eq(first_player)
       end
     end
   end
