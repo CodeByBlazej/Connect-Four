@@ -4,7 +4,7 @@ require 'pry-byebug'
 
 
 class Game
-  attr_reader :player1_name, :player1_symbol, :player2_name, :player2_symbol, :player1, :player2, :board, :first_player, :second_player
+  attr_reader :player1_name, :player1_symbol, :player2_name, :player2_symbol, :player1, :player2, :board, :first_player, :second_player, :next_turn_player
 
   def initialize
     # @player1_name = player1_name
@@ -59,8 +59,16 @@ class Game
   end
 
   def play_round
-    
+    if next_turn_player == nil || next_turn_player == first_player
+      make_move(first_player)
+      @next_turn_player = second_player
+    else
+      make_move(second_player)
+      @next_turn_player = first_player
+    end
+  end
 
+  def make_move(player)
     
   end
 
