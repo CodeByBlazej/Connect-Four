@@ -69,7 +69,7 @@ class Game
   end
 
   def make_move(player)
-    
+    puts "#{player.name} which column do you pick? From 1 - 7"
   end
 
   def somebody_wins?
