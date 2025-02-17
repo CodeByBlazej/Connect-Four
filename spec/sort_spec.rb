@@ -292,4 +292,28 @@ describe Game do
       end
     end
   end
+
+  describe '#make_move' do
+    context 'when called with first_player' do
+      subject(:game) { described_class.new }
+      let(:player) { instance_double(Players, name: 'Tim', symbol: "\u26AA") }
+
+      before do
+        game.instance_variable_set(:@player, player)
+      end
+      
+      it 'asks player which column he choses' do
+        expect(game).to receive(:puts).with("#{player.name} which column do you pick? From 1 - 7")
+        game.make_move(player)
+      end
+
+      xit 'checks if column has enought room' do
+        
+      end
+
+      xit 'throws pin in chosen column' do
+        
+      end
+    end
+  end
 end
