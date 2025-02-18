@@ -4,7 +4,7 @@ require 'pry-byebug'
 
 
 class Game
-  attr_reader :player1_name, :player1_symbol, :player2_name, :player2_symbol, :player1, :player2, :board, :first_player, :second_player, :next_turn_player
+  attr_reader :player1_name, :player1_symbol, :player2_name, :player2_symbol, :player1, :player2, :board, :first_player, :second_player, :next_turn_player, :column_selected
 
   def initialize
     # @player1_name = player1_name
@@ -70,6 +70,26 @@ class Game
 
   def make_move(player)
     puts "#{player.name} which column do you pick? From 1 - 7"
+    user_input = gets.chomp
+    @column_selected = user_input - 1
+
+    until user_input == (1..7) do
+      puts "Looks like you made a typo. Select number from 1 - 7"
+      user_input = gets.chomp
+    end
+
+    until column_selected_empty? do
+      puts "This column is already full! Please select another one..."
+      user_input = gets.chomp
+    end
+    
+    column = board.map { |el| el[column_selected] }
+    first_free_spot = column.find_index { |el| el.start_with?(player1_symbol) || el.start_with?(player2_symbol) } - 1
+
+  end
+
+  def column_selected_empty?
+    board.any? { |row| row[column_selected] == ' |' ? true : false }
   end
 
   def somebody_wins?
