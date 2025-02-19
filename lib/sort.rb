@@ -19,9 +19,10 @@ class Game
     create_board
     # board.display board is only to check whats going on now
     @board.display_board
+    # binding.pry
     select_which_player_plays_first
     #idea for next methods: 
-    #play_round until somebody_wins? || board_full?
+    play_round until somebody_wins? || board_full?
   end
 
   def select_players_names_and_symbols
@@ -70,26 +71,46 @@ class Game
 
   def make_move(player)
     puts "#{player.name} which column do you pick? From 1 - 7"
-    user_input = gets.chomp
-    @column_selected = user_input - 1
+    user_input = gets.chomp.to_i
 
-    until user_input == (1..7) do
+    until (1..7).include?(user_input) do
       puts "Looks like you made a typo. Select number from 1 - 7"
-      user_input = gets.chomp
+      user_input = gets.chomp.to_i
     end
+
+    @column_selected = user_input - 1
 
     until column_selected_empty? do
       puts "This column is already full! Please select another one..."
-      user_input = gets.chomp
+      user_input = gets.chomp.to_i
+
+      until (1..7).include?(user_input) do
+        puts "Looks like you made a typo. Select number from 1 - 7"
+        user_input = gets.chomp.to_i
+      end
     end
     
-    column = board.map { |el| el[column_selected] }
-    first_free_spot = column.find_index { |el| el.start_with?(player1_symbol) || el.start_with?(player2_symbol) } - 1
+    insert_coin(player)
+    # column = board.map { |el| el[column_selected] }
+    # first_free_spot = column.find_index { |el| el.start_with?(player1_symbol) || el.start_with?(player2_symbol) } - 1
 
   end
 
   def column_selected_empty?
     board.any? { |row| row[column_selected] == ' |' ? true : false }
+  end
+
+  def insert_coin(player)
+    column = board.map { |el| el[column_selected] }
+    first_free_slot_index = column.find_index { |el| el.start_with?(player1_symbol) || el.start_with?(player2_symbol) }
+
+    if first_free_slot_index.nil? 
+      board.last[column_selected] = player.symbol
+    else
+      board[first_free_slot_index - 1][column_selected] = player.symbol
+    end
+
+    board.display_board
   end
 
   def somebody_wins?
@@ -105,7 +126,7 @@ class Game
 
   def board_full?
     board.board.each do |arr|
-      if arr.all? { |el| el == player1_symbol || player2_symbol }
+      if arr.all? { |el| el == player1_symbol || el == player2_symbol }
         return true
       end
     end
