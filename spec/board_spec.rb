@@ -17,10 +17,10 @@ describe Board do
       let(:player) { instance_double(Players, name: 'Tom', symbol: "\u26AA") }
 
       before do
-        board.board[0][0] = player.symbol
-        board.board[0][1] = player.symbol
-        board.board[0][2] = player.symbol
-        board.board[0][3] = player.symbol
+        board.board[0][0] = "#{player.symbol}|"
+        board.board[0][1] = "#{player.symbol}|"
+        board.board[0][2] = "#{player.symbol}|"
+        board.board[0][3] = "#{player.symbol}|"
         allow(board).to receive(:puts)
       end
 
@@ -41,10 +41,10 @@ describe Board do
       let(:player) { instance_double(Players, name: 'Blazej', symbol: "\u26AB") }
 
       before do
-        board.board[0][0] = player.symbol
-        board.board[0][1] = player.symbol
-        board.board[0][4] = player.symbol
-        board.board[0][7] = player.symbol
+        board.board[0][0] = "#{player.symbol}|"
+        board.board[0][1] = "#{player.symbol}|"
+        board.board[0][4] = "#{player.symbol}|"
+        board.board[0][7] = "#{player.symbol}|"
         allow(board).to receive(:puts)
       end
 
@@ -67,10 +67,10 @@ describe Board do
       let(:player) { instance_double(Players, name: 'Tom', symbol: "\u26AA") }
 
       before do
-        board.board[0][0] = player.symbol
-        board.board[1][0] = player.symbol
-        board.board[2][0] = player.symbol
-        board.board[3][0] = player.symbol
+        board.board[0][0] = "#{player.symbol}|"
+        board.board[1][0] = "#{player.symbol}|"
+        board.board[2][0] = "#{player.symbol}|"
+        board.board[3][0] = "#{player.symbol}|"
         allow(board).to receive(:puts)
       end
 
@@ -91,10 +91,10 @@ describe Board do
       let(:player) { instance_double(Players, name: 'Eric', symbol: "\u26AB") }
 
       before do
-        board.board[0][0] = player.symbol
-        board.board[1][1] = player.symbol
-        board.board[2][0] = player.symbol
-        board.board[3][0] = player.symbol
+        board.board[0][0] = "#{player.symbol}|"
+        board.board[1][1] = "#{player.symbol}|"
+        board.board[2][0] = "#{player.symbol}|"
+        board.board[3][0] = "#{player.symbol}|"
         allow(board).to receive(:puts)
       end
 
@@ -117,10 +117,10 @@ describe Board do
       let(:player) { instance_double(Players, name: 'Ian', symbol: "\u26AA") }
 
       before do
-        board.board[2][0] = player.symbol
-        board.board[3][1] = player.symbol
-        board.board[4][2] = player.symbol
-        board.board[5][3] = player.symbol
+        board.board[2][0] = "#{player.symbol}|"
+        board.board[3][1] = "#{player.symbol}|"
+        board.board[4][2] = "#{player.symbol}|"
+        board.board[5][3] = "#{player.symbol}|"
         allow(board).to receive(:puts)
       end
 
@@ -141,10 +141,10 @@ describe Board do
       let(:player) { instance_double(Players, name: 'Tim', symbol: "\u26AB") }
 
       before do
-        board.board[0][0] = player.symbol
-        board.board[1][1] = player.symbol
-        board.board[2][3] = player.symbol
-        board.board[3][3] = player.symbol
+        board.board[0][0] = "#{player.symbol}|"
+        board.board[1][1] = "#{player.symbol}|"
+        board.board[2][3] = "#{player.symbol}|"
+        board.board[3][3] = "#{player.symbol}|"
         allow(board).to receive(:puts)
       end
 
@@ -167,10 +167,10 @@ describe Board do
       let(:player) { instance_double(Players, name: 'Terry', symbol: "\u26AB") }
 
       before do
-        board.board[0][3] = player.symbol
-        board.board[1][2] = player.symbol
-        board.board[2][1] = player.symbol
-        board.board[3][0] = player.symbol
+        board.board[0][3] = "#{player.symbol}|"
+        board.board[1][2] = "#{player.symbol}|"
+        board.board[2][1] = "#{player.symbol}|"
+        board.board[3][0] = "#{player.symbol}|"
 
         # board.board[2][6] = player.symbol
         # board.board[3][5] = player.symbol
@@ -198,10 +198,10 @@ describe Board do
       let(:player) { instance_double(Players, name: 'Bill', symbol: "\u26AA") }
 
       before do
-        board.board[0][4] = player.symbol
-        board.board[1][3] = player.symbol
-        board.board[2][2] = player.symbol
-        board.board[3][5] = player.symbol
+        board.board[0][4] = "#{player.symbol}|"
+        board.board[1][3] = "#{player.symbol}|"
+        board.board[2][2] = "#{player.symbol}|"
+        board.board[3][5] = "#{player.symbol}|"
         allow(board).to receive(:puts)
       end
 
