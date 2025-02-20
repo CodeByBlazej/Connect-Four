@@ -19,7 +19,6 @@ class Game
     create_board
     # board.display board is only to check whats going on now
     @board.display_board
-    # binding.pry
     select_which_player_plays_first
     #idea for next methods: 
     play_round until somebody_wins? || board_full?
@@ -39,6 +38,9 @@ class Game
 
   def create_board
     @board = Board.new(Array.new(6) { Array.new(7) })
+    board.board.each do |row|
+      row.map! { |el| el = '  |' }
+    end
   end
 
   def select_which_player_plays_first
@@ -60,6 +62,8 @@ class Game
   end
 
   def play_round
+    # binding.pry
+
     if next_turn_player == nil || next_turn_player == first_player
       make_move(first_player)
       @next_turn_player = second_player
@@ -88,6 +92,8 @@ class Game
         puts "Looks like you made a typo. Select number from 1 - 7"
         user_input = gets.chomp.to_i
       end
+
+      @column_selected = user_input - 1
     end
     
     insert_coin(player)
@@ -97,17 +103,17 @@ class Game
   end
 
   def column_selected_empty?
-    board.any? { |row| row[column_selected] == ' |' ? true : false }
+    board.board.any? { |row| row[column_selected] == '  |' ? true : false }
   end
 
   def insert_coin(player)
-    column = board.map { |el| el[column_selected] }
+    column = board.board.map { |el| el[column_selected] }
     first_free_slot_index = column.find_index { |el| el.start_with?(player1_symbol) || el.start_with?(player2_symbol) }
 
     if first_free_slot_index.nil? 
-      board.last[column_selected] = player.symbol
+      board.board.last[column_selected] = "#{player.symbol}|"
     else
-      board[first_free_slot_index - 1][column_selected] = player.symbol
+      board.board[first_free_slot_index - 1][column_selected] = "#{player.symbol}|"
     end
 
     board.display_board
