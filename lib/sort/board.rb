@@ -12,15 +12,15 @@ class Board
   def display_board
     board.each do |row|
       print '|'
-      print row.map { |cell| cell.nil? ? ' |' : cell }.join
-      puts "\n---------------"
+      print row.join
+      puts "\n----------------------"
     end
   end
 
   def check_row_score(player)
     board.each do |row|
       row.each_cons(4) do |four|
-        if four.all? { |el| el == player.symbol }
+        if four.all? { |el| el == "#{player.symbol}|" }
           puts "#{player.name} WON THE GAME!"
           @winner = true
           return true
@@ -34,7 +34,7 @@ class Board
   def check_column_score(player)
     (0...board.first.size).each do |index|
        board.each_cons(4) do |four|
-        if four.all? { |el| el[index] == player.symbol }
+        if four.all? { |el| el[index] == "#{player.symbol}|" }
           puts "#{player.name} WON THE GAME!"
           @winner = true
           return true
@@ -80,7 +80,7 @@ class Board
 
     diagonals.each do |arr|
       arr.each_cons(4) do |four|
-        if four.all? { |el| el == player.symbol }
+        if four.all? { |el| el == "#{player.symbol}|" }
           puts "#{player.name} WON THE GAME!"
           @winner = true
           return true
@@ -126,7 +126,7 @@ class Board
 
     diagonals.each do |arr|
       arr.each_cons(4) do |four|
-        if four.all? { |el| el == player.symbol }
+        if four.all? { |el| el == "#{player.symbol}|" }
           puts "#{player.name} WON THE GAME!"
           @winner = true
           return true
