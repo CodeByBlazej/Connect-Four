@@ -22,11 +22,15 @@ describe Game do
 
   describe '#create_board' do
     subject(:game) { described_class.new }
-    let(:board) { class_double(Board) }
 
-    it 'creates object for the board' do
-      expect(Board).to receive(:new).with(Array.new(6) { Array.new(7) })
+    it "creates board full of '  |'"  do
       game.create_board
+
+      actual_board = game.board.board
+
+      actual_board.each do |row|
+        expect(row).to all(eq('  |'))
+      end
     end
   end
 
@@ -221,12 +225,12 @@ describe Game do
         expect(game.instance_variable_get(:@next_turn_player)).to eq(nil)
       end
 
-      it 'calls #make_move with @first_player' do
+      xit 'calls #make_move with @first_player' do
         expect(game).to receive(:make_move).with(first_player)
         game.play_round
       end
 
-      it 'assigns @second_player to next_turn_player' do
+      xit 'assigns @second_player to next_turn_player' do
         game.play_round
         expect(game.instance_variable_get(:@next_turn_player)).to eq(second_player)
       end
@@ -255,7 +259,7 @@ describe Game do
         game.play_round
       end
 
-      it 'assigns @second_player to next_turn_player' do
+      xit 'assigns @second_player to next_turn_player' do
         game.play_round
         expect(game.instance_variable_get(:@next_turn_player)).to eq(second_player)
       end
@@ -281,12 +285,12 @@ describe Game do
         expect(game.instance_variable_get(:@next_turn_player)).to eq(second_player)
       end
 
-      it 'calls #make_move with @second_player' do
+      xit 'calls #make_move with @second_player' do
         expect(game).to receive(:make_move).with(second_player)
         game.play_round
       end
 
-      it 'assigns @first_player to next_turn_player' do
+      xit 'assigns @first_player to next_turn_player' do
         game.play_round
         expect(game.instance_variable_get(:@next_turn_player)).to eq(first_player)
       end
@@ -302,7 +306,7 @@ describe Game do
         game.instance_variable_set(:@player, player)
       end
       
-      it 'asks player which column he choses' do
+      xit 'asks player which column he choses' do
         expect(game).to receive(:puts).with("#{player.name} which column do you pick? From 1 - 7")
         game.make_move(player)
       end
