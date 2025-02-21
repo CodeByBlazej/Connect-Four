@@ -97,9 +97,6 @@ class Game
     end
     
     insert_coin(player)
-    # column = board.map { |el| el[column_selected] }
-    # first_free_spot = column.find_index { |el| el.start_with?(player1_symbol) || el.start_with?(player2_symbol) } - 1
-
   end
 
   def column_selected_empty?
@@ -131,13 +128,7 @@ class Game
   end
 
   def board_full?
-    board.board.each do |arr|
-      if arr.all? { |el| el == player1_symbol || el == player2_symbol }
-        return true
-      end
-    end
-
-    false
+    board.board.flatten.all? { |el| el == "#{player1_symbol}|" || el == "#{player2_symbol}|" }
   end
 
   def introduction
