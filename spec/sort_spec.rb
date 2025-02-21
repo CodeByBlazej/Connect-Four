@@ -104,7 +104,7 @@ describe Game do
         allow(board).to receive(:board).and_return(board_array)
 
         board.board.map! do |row|
-          row.map { |el| el = player1_symbol}
+          row.map { |el| el = "#{player1_symbol}|" }
         end
       end
 
