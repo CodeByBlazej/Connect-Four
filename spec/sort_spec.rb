@@ -358,4 +358,66 @@ describe Game do
       end
     end
   end
+
+  describe '#insert_coin' do
+    context 'when column is empty' do
+      subject(:game) { described_class.new }
+      let(:player) { instance_double(Players, name: 'Adam', symbol: "\u26AA") }
+      let(:player1_symbol) { "\u26AA" }
+      let(:player2_symbol) { "\u26AB" }
+      let(:board) { instance_double(Board) }
+      let(:board_array) { Array.new(6) { Array.new(7) } }
+
+      before do
+        game.instance_variable_set(:@board, board)
+        game.instance_variable_set(:@player, player)
+        game.instance_variable_set(:@player1_symbol, player1_symbol)
+        game.instance_variable_set(:@player2_symbol, player2_symbol)
+
+        allow(board).to receive(:board).and_return(board_array)
+        allow(board).to receive(:display_board)
+        allow(game).to receive(:column_selected).and_return(3)
+
+        board_array.each do |row|
+          row.map! { |el| el = '  |' }
+        end
+      end
+
+      it 'puts coin at the end' do
+        game.insert_coin(player)
+        expect(board_array.last[3]).to eq("\u26AA|")
+      end
+    end
+
+    context 'when column has 1 coin at the same bottom' do
+      subject(:game) { described_class.new }
+      let(:player) { instance_double(Players, name: 'Adam', symbol: "\u26AB") }
+      let(:player1_symbol) { "\u26AA" }
+      let(:player2_symbol) { "\u26AB" }
+      let(:board) { instance_double(Board) }
+      let(:board_array) { Array.new(6) { Array.new(7) } }
+
+      before do
+        game.instance_variable_set(:@board, board)
+        game.instance_variable_set(:@player, player)
+        game.instance_variable_set(:@player1_symbol, player1_symbol)
+        game.instance_variable_set(:@player2_symbol, player2_symbol)
+
+        allow(board).to receive(:board).and_return(board_array)
+        allow(board).to receive(:display_board)
+        allow(game).to receive(:column_selected).and_return(3)
+
+        board_array.each do |row|
+          row.map! { |el| el = '  |' }
+        end
+
+        board_array.last[3] = "\u26AA|"
+      end
+
+      it 'puts the coin at the second slot' do
+        game.insert_coin(player)
+        expect(board_array[5][3]).to eq("\u26AA|")
+      end
+    end
+  end
 end
