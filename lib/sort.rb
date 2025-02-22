@@ -7,20 +7,14 @@ class Game
   attr_reader :player1_name, :player1_symbol, :player2_name, :player2_symbol, :player1, :player2, :board, :first_player, :second_player, :next_turn_player, :column_selected
 
   def initialize
-    # @player1_name = player1_name
-    # @player1_color = player1_color
-    # @player2_name = player2_name
-    # @player2_color = player2_color
   end
 
   def play_game
     introduction
     select_players_names_and_symbols
     create_board
-    # board.display board is only to check whats going on now
     @board.display_board
     select_which_player_plays_first
-    #idea for next methods: 
     play_round until somebody_wins? || board_full?
   end
 
@@ -62,8 +56,6 @@ class Game
   end
 
   def play_round
-    # binding.pry
-
     if next_turn_player == nil || next_turn_player == first_player
       make_move(first_player)
       @next_turn_player = second_player
