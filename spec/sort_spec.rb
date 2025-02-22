@@ -316,4 +316,46 @@ describe Game do
       expect(game.instance_variable_get(:@column_selected)).to eq(3)
     end
   end
+
+  describe '#column_selected_empty?' do
+    context 'when column is empty' do
+      subject(:game) { described_class.new }
+      let(:board) { instance_double(Board) }
+      let(:board_array) { Array.new(6) { Array.new(7) } }
+
+      before do
+        game.instance_variable_set(:@board, board)
+        allow(board).to receive(:board).and_return(board_array)
+        allow(game).to receive(:column_selected).and_return(3)
+
+        board_array.each do |row|
+          row.map! { |el| el = '  |' }
+        end
+      end
+
+      it 'returns TRUE' do
+        result = game.column_selected_empty?
+        expect(result).to eq(true)
+      end
+    end
+
+    context 'when column is full' do
+      subject(:game) { described_class.new }
+      let(:board) { instance_double(Board) }
+      let(:board_array) { Array.new(6) { Array.new(7) } }
+
+      before do
+        game.instance_variable_set(:@board, board)
+        allow(board).to receive(:board).and_return(board_array)
+        allow(game).to receive(:column_selected).and_return(3)
+
+        board_array.map { |el| el[3] == '\u26AA' }
+      end
+
+      it 'returns FALSE' do
+        result = game.column_selected_empty?
+        expect(result).to eq(false)  
+      end
+    end
+  end
 end
