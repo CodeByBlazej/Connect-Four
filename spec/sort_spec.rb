@@ -225,12 +225,13 @@ describe Game do
         expect(game.instance_variable_get(:@next_turn_player)).to eq(nil)
       end
 
-      xit 'calls #make_move with @first_player' do
+      it 'calls #make_move with @first_player' do
         expect(game).to receive(:make_move).with(first_player)
         game.play_round
       end
 
-      xit 'assigns @second_player to next_turn_player' do
+      it 'assigns @second_player to next_turn_player' do
+        expect(game).to receive(:make_move).with(first_player)
         game.play_round
         expect(game.instance_variable_get(:@next_turn_player)).to eq(second_player)
       end
@@ -259,7 +260,8 @@ describe Game do
         game.play_round
       end
 
-      xit 'assigns @second_player to next_turn_player' do
+      it 'assigns @second_player to next_turn_player' do
+        expect(game).to receive(:make_move).with(first_player)
         game.play_round
         expect(game.instance_variable_get(:@next_turn_player)).to eq(second_player)
       end
@@ -285,12 +287,13 @@ describe Game do
         expect(game.instance_variable_get(:@next_turn_player)).to eq(second_player)
       end
 
-      xit 'calls #make_move with @second_player' do
+      it 'calls #make_move with @second_player' do
         expect(game).to receive(:make_move).with(second_player)
         game.play_round
       end
 
-      xit 'assigns @first_player to next_turn_player' do
+      it 'assigns @first_player to next_turn_player' do
+        expect(game).to receive(:make_move).with(second_player)
         game.play_round
         expect(game.instance_variable_get(:@next_turn_player)).to eq(first_player)
       end
@@ -298,26 +301,19 @@ describe Game do
   end
 
   describe '#make_move' do
-    context 'when called with first_player' do
-      subject(:game) { described_class.new }
-      let(:player) { instance_double(Players, name: 'Tim', symbol: "\u26AA") }
+    subject(:game) { described_class.new }
+    let(:player) { instance_double(Players, name: 'Tim', symbol: "\u26AA") }
 
-      before do
-        game.instance_variable_set(:@player, player)
-      end
+    before do
+      allow(game).to receive(:puts)
+      allow(game).to receive(:gets).and_return('4')
+      allow(game).to receive(:column_selected_empty?).and_return(true)
+    end
       
-      xit 'asks player which column he choses' do
-        expect(game).to receive(:puts).with("#{player.name} which column do you pick? From 1 - 7")
-        game.make_move(player)
-      end
-
-      xit 'checks if column has enought room' do
-        
-      end
-
-      xit 'throws pin in chosen column' do
-        
-      end
+    it 'it calls insert_coin and sets @column_selected to 3' do
+      expect(game).to receive(:insert_coin).with(player)        
+      game.make_move(player)
+      expect(game.instance_variable_get(:@column_selected)).to eq(3)
     end
   end
 end
