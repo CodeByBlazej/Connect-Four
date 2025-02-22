@@ -1,10 +1,15 @@
 require_relative '../lib/sort'
 
 describe Game do
+  subject(:game) { described_class.new }
+  let(:players) { instance_double(Players) }
+  let(:board) { instance_double(Board, winner: false) }
+  let(:board_array) { Array.new(6) { Array.new(7) } }
+  let(:player1) { instance_double(Players, name: 'Tom', symbol: "\u26AA") }
+  let(:player2) { instance_double(Players, name: 'Bob', symbol: "\u26AB") }
+
   describe '#select_players_names_and_symbols' do
     context 'when user gives 2 names' do
-      subject(:game) { described_class.new }
-      let(:players) { instance_double(Players) }
 
       before do
         player1_name = 'Tom'
@@ -21,7 +26,6 @@ describe Game do
   end
 
   describe '#create_board' do
-    subject(:game) { described_class.new }
 
     it "creates board full of '  |'"  do
       game.create_board
@@ -36,10 +40,6 @@ describe Game do
 
   describe '#somebody_wins?' do
     context 'when method is called and somebody wins' do
-      subject(:game) { described_class.new }
-      let(:board) { instance_double(Board, winner: false) }
-      let(:player1) { instance_double(Players, name: 'Tom', symbol: "\u26AA") }
-      let(:player2) { instance_double(Players, name: 'Bob', symbol: "\u26AB") }
   
       before do
         game.instance_variable_set(:@board, board)
@@ -63,10 +63,6 @@ describe Game do
     end
 
     context 'when method is called and nobody wins' do
-      subject(:game) { described_class.new }
-      let(:board) { instance_double(Board, winner: false) }
-      let(:player1) { instance_double(Players, name: 'Tom', symbol: "\u26AA") }
-      let(:player2) { instance_double(Players, name: 'Ben', symbol: "\u26AB") }
 
       before do
         game.instance_variable_set(:@board, board)
@@ -92,9 +88,6 @@ describe Game do
 
   describe '#board_full?' do
     context 'when board is full' do
-      subject(:game) { described_class.new }
-      let(:board) { instance_double(Board) }
-      let(:board_array) { Array.new(6) { Array.new(7) } }
       let(:player1_symbol) { "\u26AA" }
 
       before do
@@ -115,9 +108,6 @@ describe Game do
     end
 
     context 'when board is NOT full' do
-      subject(:game) { described_class.new }
-      let(:board) { instance_double(Board) }
-      let(:board_array) { Array.new(6) { Array.new(7) } }
       let(:player1_symbol) { "\u26AB " }
 
       before do
@@ -138,9 +128,6 @@ describe Game do
 
   describe '#select_which_player_plays_first' do
     context 'when user select player 1' do
-      subject(:game) { described_class.new }
-      let(:player1) { instance_double(Players, name: 'Tom', symbol: "\u26AA") }
-      let(:player2) { instance_double(Players, name: 'Marek', symbol: "\u26AB") }
 
       before do
         message = "Which one of you wants to play first? Please type 'player 1' or 'player 2'"
@@ -162,9 +149,6 @@ describe Game do
     end
 
     context 'when user select player 2' do
-      subject(:game) { described_class.new }
-      let(:player1) { instance_double(Players, name: 'Adam', symbol: "\u26AA") }
-      let(:player2) { instance_double(Players, name: 'Kamil', symbol: "\u26AB") }
 
       before do
         message = "Which one of you wants to play first? Please type 'player 1' or 'player 2'"
@@ -186,7 +170,6 @@ describe Game do
     end
 
     context 'when user makes typo mistake once' do
-      subject(:game) { described_class.new }
 
       before do
         message = "Which one of you wants to play first? Please type 'player 1' or 'player 2'"
@@ -207,9 +190,7 @@ describe Game do
 
   describe '#play_round' do
     context 'when it is first round' do
-      subject(:game) { described_class.new }
-      let(:player1) { instance_double(Players, name: 'Adam', symbol: "\u26AA") }
-      let(:player2) { instance_double(Players, name: 'Ewa', symbol: "\u26AB") }
+
       let(:first_player) { player1 }
       let(:second_player) { player2 }
 
@@ -238,9 +219,7 @@ describe Game do
     end
 
     context 'when it is second round and @first_player is playing' do
-      subject(:game) { described_class.new }
-      let(:player1) { instance_double(Players, name: 'Ross', symbol: "\u26AA") }
-      let(:player2) { instance_double(Players, name: 'Rob', symbol: "\u26AB") }
+
       let(:first_player) { player1 }
       let(:second_player) { player2 }
 
@@ -268,9 +247,7 @@ describe Game do
     end
 
     context 'when it is third round and @second_player is playing' do
-      subject(:game) { described_class.new }
-      let(:player1) { instance_double(Players, name: 'Greg', symbol: "\u26AA") }
-      let(:player2) { instance_double(Players, name: 'Tim', symbol: "\u26AB") }
+
       let(:first_player) { player1 }
       let(:second_player) { player2 }
       let(:next_turn_player) { second_player }
@@ -301,8 +278,6 @@ describe Game do
   end
 
   describe '#make_move' do
-    subject(:game) { described_class.new }
-    let(:player) { instance_double(Players, name: 'Tim', symbol: "\u26AA") }
 
     before do
       allow(game).to receive(:puts)
@@ -311,17 +286,14 @@ describe Game do
     end
       
     it 'it calls insert_coin and sets @column_selected to 3' do
-      expect(game).to receive(:insert_coin).with(player)        
-      game.make_move(player)
+      expect(game).to receive(:insert_coin).with(player1)        
+      game.make_move(player1)
       expect(game.instance_variable_get(:@column_selected)).to eq(3)
     end
   end
 
   describe '#column_selected_empty?' do
     context 'when column is empty' do
-      subject(:game) { described_class.new }
-      let(:board) { instance_double(Board) }
-      let(:board_array) { Array.new(6) { Array.new(7) } }
 
       before do
         game.instance_variable_set(:@board, board)
@@ -340,9 +312,6 @@ describe Game do
     end
 
     context 'when column is full' do
-      subject(:game) { described_class.new }
-      let(:board) { instance_double(Board) }
-      let(:board_array) { Array.new(6) { Array.new(7) } }
 
       before do
         game.instance_variable_set(:@board, board)
@@ -361,16 +330,12 @@ describe Game do
 
   describe '#insert_coin' do
     context 'when column is empty' do
-      subject(:game) { described_class.new }
-      let(:player) { instance_double(Players, name: 'Adam', symbol: "\u26AA") }
       let(:player1_symbol) { "\u26AA" }
       let(:player2_symbol) { "\u26AB" }
-      let(:board) { instance_double(Board) }
-      let(:board_array) { Array.new(6) { Array.new(7) } }
 
       before do
         game.instance_variable_set(:@board, board)
-        game.instance_variable_set(:@player, player)
+        game.instance_variable_set(:@player1, player1)
         game.instance_variable_set(:@player1_symbol, player1_symbol)
         game.instance_variable_set(:@player2_symbol, player2_symbol)
 
@@ -384,22 +349,18 @@ describe Game do
       end
 
       it 'puts coin at the end' do
-        game.insert_coin(player)
+        game.insert_coin(player1)
         expect(board_array.last[3]).to eq("\u26AA|")
       end
     end
 
     context 'when column has 1 coin at the same bottom' do
-      subject(:game) { described_class.new }
-      let(:player) { instance_double(Players, name: 'Adam', symbol: "\u26AB") }
       let(:player1_symbol) { "\u26AA" }
       let(:player2_symbol) { "\u26AB" }
-      let(:board) { instance_double(Board) }
-      let(:board_array) { Array.new(6) { Array.new(7) } }
 
       before do
         game.instance_variable_set(:@board, board)
-        game.instance_variable_set(:@player, player)
+        game.instance_variable_set(:@player1, player1)
         game.instance_variable_set(:@player1_symbol, player1_symbol)
         game.instance_variable_set(:@player2_symbol, player2_symbol)
 
@@ -415,7 +376,7 @@ describe Game do
       end
 
       it 'puts the coin at the second slot' do
-        game.insert_coin(player)
+        game.insert_coin(player1)
         expect(board_array[5][3]).to eq("\u26AA|")
       end
     end
