@@ -1,8 +1,10 @@
 require_relative '../lib/sort/board'
 
 describe Board do
+  subject(:board) { described_class.new(Array.new(6) { Array.new(7) }) }
+  let(:player) { instance_double(Players, name: 'Tom', symbol: "\u26AA") }
+  
   describe '#display_board' do
-    subject(:board) { described_class.new(Array.new(6) { Array.new(7) }) }
 
     it 'has a 7 x 6 grid' do
       expect(board.board[0].size).to eq(7)
@@ -13,8 +15,6 @@ describe Board do
 
   describe '#check_row_score' do
     context 'when 4 fields in a row are the same' do
-      subject(:board) { described_class.new(Array.new(6) { Array.new(7) }) }
-      let(:player) { instance_double(Players, name: 'Tom', symbol: "\u26AA") }
 
       before do
         board.board[0][0] = "#{player.symbol}|"
@@ -37,8 +37,6 @@ describe Board do
     end
 
     context 'when fields in a rows are different and there is NO winner' do
-      subject(:board) { described_class.new(Array.new(6) { Array.new(7) }) }
-      let(:player) { instance_double(Players, name: 'Blazej', symbol: "\u26AB") }
 
       before do
         board.board[0][0] = "#{player.symbol}|"
@@ -63,8 +61,6 @@ describe Board do
 
   describe '#check_column_score' do
     context 'when 4 scores in any row are the same' do
-      subject(:board) { described_class.new(Array.new(6) { Array.new(7) }) }
-      let(:player) { instance_double(Players, name: 'Tom', symbol: "\u26AA") }
 
       before do
         board.board[0][0] = "#{player.symbol}|"
@@ -87,8 +83,6 @@ describe Board do
     end
 
     context 'when fields in a column are different and there is NO winner' do
-      subject(:board) { described_class.new(Array.new(6) { Array.new(7) }) }
-      let(:player) { instance_double(Players, name: 'Eric', symbol: "\u26AB") }
 
       before do
         board.board[0][0] = "#{player.symbol}|"
@@ -113,8 +107,6 @@ describe Board do
 
   describe '#check_diagonal_score' do
     context 'when any 4 diagonal scores are the same' do
-      subject(:board) { described_class.new(Array.new(6) { Array.new(7) }) }
-      let(:player) { instance_double(Players, name: 'Ian', symbol: "\u26AA") }
 
       before do
         board.board[2][0] = "#{player.symbol}|"
@@ -137,8 +129,6 @@ describe Board do
     end
 
     context 'when there is NOT 4 scores in diagonal' do
-      subject(:board) { described_class.new(Array.new(6) { Array.new(7)} ) }
-      let(:player) { instance_double(Players, name: 'Tim', symbol: "\u26AB") }
 
       before do
         board.board[0][0] = "#{player.symbol}|"
@@ -163,8 +153,6 @@ describe Board do
 
   describe "#check_anti_diagonal_score" do
     context 'when any 4 anti diagonal scores are the same' do
-      subject(:board) { described_class.new(Array.new(6) { Array.new(7) }) }
-      let(:player) { instance_double(Players, name: 'Terry', symbol: "\u26AB") }
 
       before do
         board.board[0][3] = "#{player.symbol}|"
@@ -194,8 +182,6 @@ describe Board do
     end
 
     context 'when there is NOT 4 scores in anti diagonal' do
-      subject(:board) { described_class.new(Array.new(6) { Array.new(7) }) }
-      let(:player) { instance_double(Players, name: 'Bill', symbol: "\u26AA") }
 
       before do
         board.board[0][4] = "#{player.symbol}|"
